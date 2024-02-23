@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { HomeScreen } from "./screens/HomeScreen";
 import { SavedLocationScreen } from "./screens/SavedLocationScreen";
+import { SearchScreen } from "./screens/SearchScreen";
 import { SafeAreaView } from "react-native";
 
 const Tab = createMaterialTopTabNavigator();
@@ -23,7 +24,7 @@ export default function App() {
       <NavigationContainer>
         <Tab.Navigator>
           <Tab.Screen name="Home" component={HomeScreen} />
-          <Tab.Screen name="Search" component={SettingsScreen} />
+          <Tab.Screen name="Search" component={SearchScreen} />
           <Tab.Screen name="Saved Location" component={SavedLocationScreen} />
         </Tab.Navigator>
       </NavigationContainer>

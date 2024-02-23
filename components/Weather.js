@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, Image } from "react-native";
+import { styles } from "../stylesheets/stylesheet";
 import { DataTable } from "react-native-paper";
 import data from "./WeatherCodeDescriptions.json";
 import { Icon } from "@rneui/themed";
@@ -12,7 +13,7 @@ const Weather = ({ weatherData }) => {
       <View>
         <DataTable>
           <DataTable.Row>
-            <DataTable.Cell style={styles.cell}>
+            <DataTable.Cell style={styles.cellDataTable}>
               <View style={styles.rowViewContainer}>
                 <View>
                   {weatherData.isDay ? (
@@ -30,7 +31,7 @@ const Weather = ({ weatherData }) => {
                   )}
                 </View>
                 <View style={styles.columnViewContainer}>
-                  <View style={styles.cell}>
+                  <View style={styles.cellDataTable}>
                     <Text style={styles.subtitle}>
                       {data[weatherData.weatherCode].day.description}
                     </Text>
@@ -45,7 +46,7 @@ const Weather = ({ weatherData }) => {
             </DataTable.Cell>
           </DataTable.Row>
           <DataTable.Row style={styles.rowDataTable}>
-            <DataTable.Cell style={styles.cell}>
+            <DataTable.Cell style={styles.cellDataTable}>
               <View style={styles.rowViewContainer}>
                 <View>
                   <Icon
@@ -71,7 +72,7 @@ const Weather = ({ weatherData }) => {
                 </View>
               </View>
             </DataTable.Cell>
-            <DataTable.Cell style={styles.cell}>
+            <DataTable.Cell style={styles.cellDataTable}>
               <View style={styles.rowViewContainer}>
                 <View>
                   <Icon
@@ -83,12 +84,24 @@ const Weather = ({ weatherData }) => {
                 </View>
                 <View style={styles.columnViewContainer}>
                   <View style={styles.smallTextCell}>
+                    <Icon
+                      name="caret-up"
+                      type="font-awesome-5"
+                      color="#808080"
+                      size={20}
+                    />
                     <Text style={styles.smallText}>
                       {" "}
                       {weatherData.sunrise.substring(11)}
                     </Text>
                   </View>
                   <View style={styles.smallTextCell}>
+                    <Icon
+                      name="caret-down"
+                      type="font-awesome-5"
+                      color="#808080"
+                      size={20}
+                    />
                     <Text style={styles.smallText}>
                       {" "}
                       {weatherData.sunset.substring(11)}
@@ -97,7 +110,7 @@ const Weather = ({ weatherData }) => {
                 </View>
               </View>
             </DataTable.Cell>
-            <DataTable.Cell style={styles.cell}>
+            <DataTable.Cell style={styles.cellDataTable}>
               <View style={styles.rowViewContainer}>
                 <Icon
                   name="tint"
@@ -118,58 +131,5 @@ const Weather = ({ weatherData }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  weatherContainer: {
-    flex: 1,
-    backgroundColor: "white",
-    width: "80%",
-    marginTop: 90,
-    marginBottom: 55,
-  },
-  rowDataTable: {
-    padding: 10,
-  },
-  cell: {
-    justifyContent: "center",
-    paddingLeft: 10,
-  },
-  weatherImage: {
-    width: 200,
-    height: 200,
-  },
-  columnViewContainer: {
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  rowViewContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  bodyContainer: {
-    flex: 2,
-    alignItems: "flex-start",
-    justifyContent: "flex-end",
-    paddingLeft: 25,
-    marginBottom: 40,
-  },
-  title: {
-    fontSize: 48,
-    color: "black",
-  },
-  subtitle: {
-    fontSize: 24,
-    color: "black",
-  },
-  smallText: {
-    fontSize: 16,
-    color: "black",
-  },
-  smallTextCell: {
-    alignItems: "flex-start",
-    paddingLeft: 10,
-    justifyContent: "center",
-  },
-});
 
 export default Weather;
