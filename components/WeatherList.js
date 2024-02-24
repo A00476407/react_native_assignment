@@ -1,12 +1,9 @@
 import React from "react";
 import { View, Text, Image } from "react-native";
-import { styles } from "../stylesheets/stylesheet";
 import { DataTable } from "react-native-paper";
-import data from "./WeatherCodeDescriptions.json";
-import { Icon } from "@rneui/themed";
 
 export const WeatherList = ({ weatherData }) => {
-  console.log("weatherData in List", weatherData.length);
+  //console.log("weatherData in List", weatherData.length);
 
   return (
     <View>
