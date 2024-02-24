@@ -3,7 +3,6 @@ import { Text, View } from "react-native";
 import { styles } from "../stylesheets/stylesheet";
 import * as Location from "expo-location";
 import Weather from "../components/Weather";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export function HomeScreen() {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +26,7 @@ export function HomeScreen() {
     )
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
+        //console.log(json);
         setWeatherData({
           temperature: json.current.temperature_2m,
           weatherCode: json.current.weather_code,
@@ -66,7 +65,7 @@ export function HomeScreen() {
     })();
   }, []);
 
-  console.log("testing" , weatherData);
+  //console.log("testing" , weatherData);
   return (
     <View style={styles.container}>
       {isLoading ? (

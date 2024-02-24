@@ -7,9 +7,20 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  weatherContainer: {
+  searchContainer: {
     flex: 1,
-    width: "80%",
+    backgroundColor: "#fff",
+    alignItems: "flex-start",
+  },
+  searchBar: {
+    width: "100%",
+    padding: 20
+  },
+  weatherContainer: {
+    marginTop: 10,
+    marginTop: 10,
+    flex: 1,
+    width: "100%",
     justifyContent: "center",
   },
   weatherImage: {
@@ -17,12 +28,12 @@ export const styles = StyleSheet.create({
     height: 200,
   },
   rowDataTable: {
-    padding: 30,
+    padding: 5,
     borderBottomWidth: 0,
   },
   cellDataTable: {
     justifyContent: "center",
-    paddingLeft: 10,
+    paddingLeft: 5,
   },
   columnViewContainer: {
     flexDirection: "column",
@@ -50,7 +61,10 @@ export const styles = StyleSheet.create({
   smallTextCell: {
     flexDirection: "row",
     alignItems: "flex-start",
-    paddingLeft: 10,
+    paddingLeft: 3,
     justifyContent: "center",
+  },
+  button: {
+    margin: 10
   },
 });

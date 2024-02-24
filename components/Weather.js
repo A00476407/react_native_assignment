@@ -6,13 +6,11 @@ import data from "./WeatherCodeDescriptions.json";
 import { Icon } from "@rneui/themed";
 
 const Weather = ({ weatherData }) => {
-  //console.log(weatherData.weatherCode);
-  //console.log(data[weatherData.weatherCode]);
   return (
     <View style={styles.weatherContainer}>
       <View>
         <DataTable>
-          <DataTable.Row>
+          <DataTable.Row style={{borderBottomWidth: 0, height: 100}}>
             <DataTable.Cell style={styles.cellDataTable}>
               <View style={styles.rowViewContainer}>
                 <View>

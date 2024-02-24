@@ -1,44 +1,47 @@
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Platform, Text, View } from "react-native";
 import { styles } from "../stylesheets/stylesheet";
 import * as Location from "expo-location";
-import Weather from "../components/Weather";
-import { Button } from 'react-native-paper';
+import { LocationList } from "../components/LocationList";
+import { Button } from "@rneui/themed";
+import { Searchbar } from "react-native-paper";
+import * as SQLite from "expo-sqlite";
+
+function getDatabase() {
+  // Error handling, in case the platform is web (expo-sqlite does not support web)
+  if (Platform.OS === "web") {
+    return {
+      transaction: () => {
+        return {
+          executeSql: () => {},
+        };
+      },
+    };
+  }
+
+  const db = SQLite.openDatabase("myDb.db");
+  // console.log(db);
+  return db;
+}
+
+const db = getDatabase();
 
 export function SearchScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [locationData, setLocationData] = useState([]);
+  var mergedResults = [];
 
-  const [weatherData, setWeatherData] = useState({
-    temperature: 0,
-    weatherCode: 0,
-    apparentTemperature: 0,
-    isDay: 0,
-    relativeHumidity: 0,
-    minTemp: 0,
-    maxTemp: 0,
-    sunrise: "",
-    sunset: ""
-  });
-
-  const fetchWeather = (latitude = 25, longitude = 25) => {
+  const fetchLocation = (searchQuery = "") => {
+    setIsLoading(true);
     fetch(
-      `http://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&forecast_days=1`
+      `https://geocoding-api.open-meteo.com/v1/search?name=${searchQuery}&count=5&language=en&format=json`
     )
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
-        setWeatherData({
-          temperature: json.current.temperature_2m,
-          weatherCode: json.current.weather_code,
-          apparentTemperature: json.current.apparent_temperature,
-          isDay: json.current.is_day,
-          relativeHumidity: json.current.relative_humidity_2m,
-          minTemp: json.daily.temperature_2m_min[0],
-          maxTemp: json.daily.temperature_2m_max[0],
-          sunrise: json.daily.sunrise[0],
-          sunset: json.daily.sunset[0]
-        });
+        //console.log(json.results);
+        setLocationData(json.results);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -46,34 +49,23 @@ export function SearchScreen() {
         setError(true);
       });
   };
-  useEffect(() => {
-    /// Wrapped with an async scope because we're using await in useEffect
-    (async () => {
-      setIsLoading(true);
 
-      // Get Permission
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setError("Permission to access location was denied");
-        return;
-      }
-
-      // Get location (if permission granted)
-      let location = await Location.getCurrentPositionAsync({});
-
-      // Fetch Weather data from location's latitude and longitude
-      fetchWeather(location.coords.latitude, location.coords.longitude);
-    })();
-  }, []);
-
-  console.log("testing" , weatherData);
   return (
-    <View style={styles.container}>
-      <Text>City</Text>
-      <Button icon="search-location" type="font-awesome-5" mode="contained" onPress={() => console.log('Pressed')}>
-    Search
-  </Button>
-      {error && <Text style={{ color: "red" }}>An error has occurred!</Text>}
+    <View style={styles.searchContainer}>
+      <View style={styles.searchBar}>
+        <Searchbar
+          placeholder="City Name Search"
+          onChangeText={setSearchQuery}
+          onSubmitEditing={() => fetchLocation(searchQuery)}
+          value={searchQuery}
+        />
+        {isLoading ? (
+          <Text style={styles.loadingText}>Fetching the location data...</Text>
+        ) : (
+          <LocationList locationData={locationData} />
+        )}
+        {error && <Text style={{ color: "red" }}>An error has occurred!</Text>}
+      </View>
     </View>
   );
 }
