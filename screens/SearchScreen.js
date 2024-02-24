@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Platform, Text, View } from "react-native";
 import { styles } from "../stylesheets/stylesheet";
-import * as Location from "expo-location";
 import { LocationList } from "../components/LocationList";
-import { Button } from "@rneui/themed";
 import { Searchbar } from "react-native-paper";
 import * as SQLite from "expo-sqlite";
 

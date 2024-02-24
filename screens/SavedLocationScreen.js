@@ -2,7 +2,6 @@ import { Text, View } from "react-native";
 import { styles } from "../stylesheets/stylesheet";
 import { useState, useEffect } from "react";
 import { SavedLocationList } from "../components/SavedLocationList";
-import { DataTable, Button } from "react-native-paper";
 
 export function SavedLocationScreen() {
   const [error, setError] = useState(false);

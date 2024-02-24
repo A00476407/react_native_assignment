@@ -1,6 +1,4 @@
-import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import { styles } from "./stylesheets/stylesheet";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { HomeScreen } from "./screens/HomeScreen";
