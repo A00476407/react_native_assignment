@@ -119,7 +119,7 @@ export const SavedLocationList = () => {
             <DataTable.Title numberOfLines={8}>Country</DataTable.Title>
             <DataTable.Title numberOfLines={8}>Admin1</DataTable.Title>
           </DataTable.Header>
-          {locationData.map((item) => (
+          {list.map((item) => (
             <DataTable.Row
               key={item.id}
               onPress={() => fetchWeather(item.latitude, item.longitude, item)}
