@@ -101,7 +101,7 @@ export const SavedLocationList = () => {
           2. Select a city to show the temperature
         </Text>
         <Text style={styles.smallText}>
-          3. Click the button to save the location
+          3. Click the button to remove the location
         </Text>
         {isLoading ? (
           <Text style={styles.loadingText}>{"\n"}Waiting...</Text>
