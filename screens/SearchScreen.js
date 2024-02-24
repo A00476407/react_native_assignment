@@ -31,7 +31,6 @@ export function SearchScreen() {
   const [error, setError] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [locationData, setLocationData] = useState([]);
-  var mergedResults = [];
 
   const fetchLocation = (searchQuery = "") => {
     setIsLoading(true);

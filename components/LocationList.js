@@ -25,7 +25,7 @@ function getDatabase() {
 const db = getDatabase();
 
 export const LocationList = ({ locationData }) => {
-  const {list, setList} = useContext(myContext);
+  const { list, setList } = useContext(myContext);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -42,6 +42,7 @@ export const LocationList = ({ locationData }) => {
   });
   const [selectedLocationData, setSelectedLocationData] = useState({
     id: 0,
+    city: "",
     country: "",
     admin1: "",
     longitude: 0,
@@ -68,6 +69,7 @@ export const LocationList = ({ locationData }) => {
         });
         setSelectedLocationData({
           id: item.id,
+          city: item.name,
           country: item.country,
           admin1: item.admin1,
           longitude: longitude,
@@ -82,33 +84,23 @@ export const LocationList = ({ locationData }) => {
   };
 
   const getLocation = () => {
-    console.log("GETLOCATION");
     db.transaction((tx) => {
       tx.executeSql(
-        "SELECT * FROM savedLocation",
+        `SELECT * FROM savedLocation;`,
         [],
-        (tx, result) => {
-          const rows = result.rows;
-          const itemsArray = [];
-          for (let i = 0; i < rows.length; i++) {
-            itemsArray.push(rows.item(i));
-          }
-          //setList(itemsArray);
-          console.log(itemsArray);
-        },
-        (error) => {
-          console.log("Error getting items:", error);
-        }
+        (_, { rows: { _array } }) => setList(_array)
       );
     });
+    console.log(list);
   };
 
   const addLocation = () => {
     console.log(selectedLocationData);
-    setList((currentList) => [...currentList, selectedLocationData]);
-    if (selectedLocationData.id == null) return;
+    if (selectedLocationData.id == 0) return;
 
-    
+    //setList((currentList) => [...currentList, selectedLocationData]);    
+
+    try {
       db.transaction((tx) => {
         tx.executeSql(
           "INSERT INTO savedLocation (id, city, country, admin1, longitude, latitude) VALUES (?, ?, ?, ?, ?, ?)",
@@ -126,6 +118,10 @@ export const LocationList = ({ locationData }) => {
           }
         );
       });
+    } catch (err) {
+      console.log(err);
+      setError(true);
+    }
   };
 
   return (
@@ -145,7 +141,11 @@ export const LocationList = ({ locationData }) => {
         )}
       </View>
       <View style={styles.button}>
-        <Button mode="outlined" onPress={addLocation}>
+        <Button
+          mode="outlined"
+          onPress={addLocation}
+          disabled={list.length >= 4}
+        >
           Save
         </Button>
       </View>

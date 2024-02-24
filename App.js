@@ -60,6 +60,7 @@ export default function App() {
         (_, { rows: { _array } }) => setList(_array)
       );
     });
+    console.log(list);
   }, []);
   return (
     <myContext.Provider value={{list, setList}}>

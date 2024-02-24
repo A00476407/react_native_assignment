@@ -42,6 +42,7 @@ export const SavedLocationList = () => {
   });
   const [selectedLocationData, setSelectedLocationData] = useState({
     id: 0,
+    city: "",
     country: "",
     admin1: "",
     longitude: 0,
@@ -68,6 +69,7 @@ export const SavedLocationList = () => {
         });
         setSelectedLocationData({
           id: item.id,
+          city: item.city,
           country: item.country,
           admin1: item.admin1,
           longitude: longitude,
@@ -124,7 +126,7 @@ export const SavedLocationList = () => {
               key={item.id}
               onPress={() => fetchWeather(item.latitude, item.longitude, item)}
             >
-              <DataTable.Cell>{item.name}</DataTable.Cell>
+              <DataTable.Cell>{item.city}</DataTable.Cell>
               <DataTable.Cell>{item.country}</DataTable.Cell>
               <DataTable.Cell>{item.admin1}</DataTable.Cell>
             </DataTable.Row>
