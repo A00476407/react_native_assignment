@@ -38,7 +38,10 @@ export function SearchScreen() {
       .then((res) => res.json())
       .then((json) => {
         //console.log(json.results);
-        setLocationData(json.results);
+        if (!json.results) {
+          setIsLoading(false);
+          return;
+        } else setLocationData(json.results);
         setIsLoading(false);
       })
       .catch((err) => {
